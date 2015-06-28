@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocosquer <ocosquer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivier <olivier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/20 16:07:19 by ocosquer          #+#    #+#             */
-/*   Updated: 2013/12/01 20:08:21 by ocosquer         ###   ########.fr       */
+/*   Updated: 2015/06/27 20:50:27 by olivier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ int	ft_strcmp(const char *s1, const char *s2)
 	{
 		index++;
 	}
-	diff = (int)s1[index] - (int)s2[index];
-	diff = (diff < 0) ? -1 : diff;
-	diff = (diff > 0) ? 1 : diff;
+	diff = (unsigned char)s1[index] - (unsigned char)s2[index];
 	return (diff);
 }

@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdel.c                                        :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocosquer <ocosquer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivier <olivier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/22 17:53:29 by ocosquer          #+#    #+#             */
-/*   Updated: 2013/11/25 17:01:03 by ocosquer         ###   ########.fr       */
+/*   Created: 2013/11/19 19:11:11 by ocosquer          #+#    #+#             */
+/*   Updated: 2015/06/28 01:31:52 by olivier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-void	ft_strdel(char **as)
+int	ft_isalpha(int c)
 {
-	free(*as);
-	*as = NULL;
+	int	result;
+
+	result = 0;
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		result = 1;
+	return (result);
 }

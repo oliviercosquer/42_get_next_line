@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocosquer <ocosquer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivier <olivier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/20 16:34:41 by ocosquer          #+#    #+#             */
-/*   Updated: 2015/02/11 01:49:21 by ocosquer         ###   ########.fr       */
+/*   Updated: 2015/06/27 20:51:53 by olivier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	unsigned int	len2;
 	int				diff;
 
+	if (n == 0)
+		return (0);
 	index = 0;
 	len1 = ft_strlen((char*)s1);
 	len2 = ft_strlen((char*)s2);
@@ -28,8 +30,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	{
 		index++;
 	}
-	diff = (int)s1[index] - (int)s2[index];
-	diff = (diff < 0) ? -1 : diff;
-	diff = (diff > 0) ? 1 : diff;
+	diff = (unsigned char)s1[index] - (unsigned char)s2[index];
 	return (diff);
 }

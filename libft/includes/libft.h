@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocosquer <ocosquer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivier <olivier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/19 14:46:34 by ocosquer          #+#    #+#             */
-/*   Updated: 2015/02/11 02:05:40 by ocosquer         ###   ########.fr       */
+/*   Updated: 2015/06/28 14:44:44 by olivier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 # define LIBFT_H
 # include <unistd.h>
 # include <stdlib.h>
+
+typedef	struct	s_list
+{
+void			*content;
+size_t			content_size;
+struct s_list   *next;
+}				t_list;
 
 void	*ft_memset(void *byte, int character, size_t len);
 void	ft_bzero(void *byte, size_t len);
@@ -68,4 +75,8 @@ void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char const *s, int fd);
 void	ft_putendl_fd(char const *s, int fd);
 void	ft_putnbr_fd(int n, int fd);
+t_list	*ft_lstnew(void const *content, size_t content_size);
+void	ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
+void	ft_lstdel(t_list **alst, void (*del)(void *, size_t content_size));
+void	ft_lstadd(t_list **alst, t_list *new_elem);
 #endif

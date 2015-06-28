@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_putendl.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocosquer <ocosquer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivier <olivier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2013/11/19 19:11:11 by ocosquer          #+#    #+#             */
-/*   Updated: 2015/02/11 01:51:57 by ocosquer         ###   ########.fr       */
+/*   Created: 2015/06/27 20:28:34 by olivier           #+#    #+#             */
+/*   Updated: 2015/06/27 20:31:58 by olivier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <libft.h>
 
-int	ft_isalpha(int c)
+void ft_putendl(char const *s)
 {
-	int	result;
-
-	result = 0;
-	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
-		result = 1024;
-	return (result);
+	ft_putstr(s);
+	ft_putstr("\n");
 }
