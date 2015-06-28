@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocosquer <ocosquer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivier <olivier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/09/28 23:16:27 by ocosquer          #+#    #+#             */
-/*   Updated: 2015/02/15 23:57:01 by ocosquer         ###   ########.fr       */
+/*   Updated: 2015/06/28 18:05:23 by olivier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int		get_next_line(int fd, char **line)
 	int				char_read;
 	static char		buffer[BUFF_SIZE];
 
+	if (line == NULL || fd < 1)
+		return (-1);
 	if (*line)
 		*line = NULL;
 	eol = ft_strchr(buffer, '\n') ? 1 : 0;
