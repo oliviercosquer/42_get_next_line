@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocosquer <ocosquer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivier <olivier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/19 17:27:06 by ocosquer          #+#    #+#             */
-/*   Updated: 2015/02/11 01:45:20 by ocosquer         ###   ########.fr       */
+/*   Updated: 2015/07/05 23:10:14 by olivier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	*ft_memmove(void *s1, const void *s2, size_t n)
 	unsigned int	index;
 
 	str1 = (char*)s1;
-	str2 = (char*)s2;
+	str2 = ft_strdup(s2);
 	index = 0;
 	if (str1 >= str2 && str1 <= (str2 + ft_strlen(str2)))
 	{

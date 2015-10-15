@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ocosquer <ocosquer@student.42.fr>          +#+  +:+       +#+        */
+/*   By: olivier <olivier@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/11/20 11:27:05 by ocosquer          #+#    #+#             */
-/*   Updated: 2015/02/11 01:46:17 by ocosquer         ###   ########.fr       */
+/*   Updated: 2015/06/28 19:51:07 by olivier          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*ft_strdup(const char *str)
 			new_str[index] = str[index];
 			index++;
 		}
+		new_str[length] = '\0';
 	}
 	return (new_str);
 }
