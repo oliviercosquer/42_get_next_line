@@ -12,11 +12,12 @@
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE  512
+# define BUFF_SIZE 1
 # include "libft.h"
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdio.h>
+# define SEGV ft_putendl("SEGV");
 
 typedef	struct	s_buffer
 {

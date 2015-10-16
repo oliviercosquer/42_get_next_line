@@ -23,12 +23,12 @@ int		get_next_line(int fd, char **line)
 	if (!line || fd < 1 || !buff)// || !*line)
 		return (-1);
 	ret = buff->ret_code;
-	*line = (*line) ? NULL : *line;
+	*line = NULL;//(*line) ? NULL : *line;
 	eol = 0;
 	while (ret > 0 && !eol && buff->ret_code > 0)
 	{
 		buff->char_read = 0;
-		if (!ft_strlen(buff->buffer))
+		if (!buff->buffer[0])
 		{
 			buff->char_read = read(buff->fd, buff->buffer, BUFF_SIZE);
 			buff->buffer[buff->char_read] = '\0';
@@ -40,12 +40,41 @@ int		get_next_line(int fd, char **line)
 		ret = (ret == -1 || buff->char_read == -1) ? -1 : ret;
 		buff->ret_code = ret;
 	}
+	printf("%zu\n", ft_strlen(buff->buffer));
 	if (ret == 0 || ret == -1)
 		ft_gnl_del_buffer(&buff_lst, fd);
 	return (ret);
 }
 
 void	ft_gnl_getnext(char **line, char *buffer)
+{
+	int		len;
+	char	*tmp;
+	char	*tmp2;
+	char	*eol;
+	
+	eol = ft_strchr(buffer, '\n');
+	len = (eol) ? (eol - buffer) : (int)ft_strlen(buffer);
+	tmp = (*line) ? *line : NULL;
+	*line = ft_strsub(buffer, 0, len);
+	tmp2 = *line;
+	if (tmp)
+	{
+		*line = ft_strjoin(tmp, tmp2);
+		ft_strdel(&tmp);
+	}
+	if (tmp2 && tmp2 != *line)
+		ft_strdel(&tmp2);
+	if (eol)
+	{
+		ft_memmove(buffer, eol + 1, ft_strlen(eol + 1));
+		ft_bzero(buffer + len, BUFF_SIZE - ft_strlen(eol));
+	}
+	else
+		ft_bzero(buffer + ft_strlen(eol), BUFF_SIZE + 1);
+}
+
+void	ft_gnl_getnext2(char **line, char *buffer)
 {
 	char	*end_of_line;
 	char	*tmp;
@@ -57,14 +86,16 @@ void	ft_gnl_getnext(char **line, char *buffer)
 	if (end_of_line)
 	{
 		tmp = *line;
-		*line = ft_strsub(buffer, 0, end_of_line - buffer);
 		len = ft_strlen(end_of_line + 1);
+		len = (len) ? len : 1;
+		*line = ft_strsub(buffer, 0, end_of_line - buffer);
 		ft_memmove(buffer, end_of_line + 1, len);
 	}
 	else
 	{
 		tmp = *line;
 		*line = ft_strdup(buffer);
+		//ft_putendl(*line);
 	}
 	if (tmp)
 	{
@@ -73,6 +104,8 @@ void	ft_gnl_getnext(char **line, char *buffer)
 		ft_strdel(&tmp);
 		ft_strdel(&tmp2);
 	}
+	printf("len sub: %ld\nbuffer + len: '%s'\n bzero: %'d'\n", end_of_line - buffer, buffer  + len, BUFF_SIZE - len - 1);
+//ft_putendl(*line);
 	ft_bzero(buffer + len, BUFF_SIZE - len - 1);
 }
 
