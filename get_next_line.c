@@ -12,37 +12,17 @@
 
 #include "get_next_line.h"
 
-void	ft_display_buffer(t_buffer *buffer)
-{
-	ft_putstr("FD:");
-	printf("'%d'", buffer->fd);
-//	ft_putnbr(buffer->fd);
-	ft_putstr(";");
-	ft_putstr("\nContent:");
-	ft_putendl(buffer->buffer);
-}
-
-void	ft_print_buffers(t_buffer *buffers)
-{
-	ft_putendl("Liste des Files descriptors ouverts:");
-	while (buffers)
-	{
-		ft_display_buffer(buffers);
-		buffers = buffers->next;
-	}
-}
 int		get_next_line(int fd, char **line)
 {
 	static t_buffer	*buff_lst;
-	static t_buffer *buff;
+	t_buffer 		*buff;
 	int				ret;
 	int				eol;
 
 	buff = ft_gnl_get_buffer(&buff_lst, fd);
 	if (!line || fd < 1 || !buff)// || !*line)
 		return (-1);
-	else
-		ret = buff->ret_code;
+	ret = buff->ret_code;
 	*line = (*line) ? NULL : *line;
 	eol = 0;
 	while (ret > 0 && !eol && buff->ret_code > 0)
@@ -64,45 +44,6 @@ int		get_next_line(int fd, char **line)
 		ft_gnl_del_buffer(&buff_lst, fd);
 	return (ret);
 }
-/*int		get_next_line(int fd, char **line)
-{
-	return (get_next_line2(fd, line));
-	int					eol;
-	int					char_read;
-	int					ret_code;
-	static	t_buffer	*fd_lst;
-	t_buffer			*cur_fd;
-
-	ret_code = -2;
-	char_read = 0;
-
-	//ft_print_buffers(buffers);
-	cur_fd = ft_gnl_get_buffer(&fd_lst, fd);
-	if (line == NULL || fd < 1 || !cur_fd->buffer)
-		return (-1);
-	*line = (*line) ? NULL : *line;
-	if (ft_strlen(cur_fd->buffer) > 0)
-		ft_gnl_getnext(line, cur_fd->buffer);
-	eol = ft_strchr(cur_fd->buffer, '\n') ? 1 : 0;
-	if (cur_fd->ret_code <= 0)
-	{
-		ret_code = cur_fd->ret_code;
-		return (ret_code);
-	}
-	while (!eol && (char_read = read(fd, cur_fd->buffer, BUFF_SIZE)))
-	{
-		eol = ft_strchr(cur_fd->buffer, '\n') ? 1 : 0;
-		cur_fd->buffer[char_read] = '\0';
-		ft_gnl_getnext(line, cur_fd->buffer);
-	}
-	ret_code = (char_read == 0 && ft_strlen(cur_fd->buffer) == 0) ? 0 : ret_code;
-	ret_code = ((char_read > 0 || eol) && ret_code == -2) ? 1 : ret_code;
-	ret_code = (ret_code == -2) ? -1 : ret_code;
-	cur_fd->ret_code = ret_code;
-	if (ret_code == 0 || ret_code == -1)
-		ft_gnl_del_buffer(&fd_lst, fd);
-	return (ret_code);
-}*/
 
 void	ft_gnl_getnext(char **line, char *buffer)
 {
@@ -137,37 +78,25 @@ void	ft_gnl_getnext(char **line, char *buffer)
 
 t_buffer	*ft_gnl_get_buffer(t_buffer **buffers, int fd)
 {
-	t_buffer			*buff;
-
-	buff = *buffers;
-	while (buff)
-	{
-		if (buff->fd == fd)
-		{
-			//printf("buffer '%d' exist!\n", fd);
-			return (buff);
-		}
-		buff = buff->next;
-	}
-	//printf("buffer '%d' not found!\n", fd);
-	return (ft_gnl_add_buffer(buffers, fd));
-}
-
-t_buffer	*ft_gnl_add_buffer(t_buffer **buffers, int fd)
-{
-	t_buffer	*new_buff;
 	t_buffer	*tmp_buff;
+	t_buffer	*new_buff;
 
-	new_buff = (t_buffer *)malloc(sizeof(t_buffer));
 	tmp_buff = *buffers;
+	while (tmp_buff && tmp_buff->next)
+	{
+		if (tmp_buff->fd == fd)
+			return (tmp_buff);
+		tmp_buff = tmp_buff->next;
+	}
+	if (tmp_buff && tmp_buff->fd == fd)
+		return (tmp_buff);
+	new_buff = (t_buffer *)malloc(sizeof(t_buffer));
 	if (new_buff)
 	{
 		new_buff->fd = fd;
 		new_buff->ret_code = 1;
 		new_buff->next = NULL;
 		new_buff->buffer = ft_strnew(BUFF_SIZE + 1);
-		while(tmp_buff && tmp_buff->next)
-			tmp_buff = tmp_buff->next;
 		if (tmp_buff)
 			tmp_buff->next = new_buff;
 		else
