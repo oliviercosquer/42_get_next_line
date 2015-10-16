@@ -57,9 +57,11 @@ int		get_next_line(int fd, char **line)
 		eol = ft_strchr(buff->buffer, '\n') ? 1 : 0;
 		ret = (buff->char_read == 0 && ft_strlen(buff->buffer) == 0) ? 0 : ret;
 		ret = ((buff->char_read > 0 || eol) && ret == -2) ? 1 : ret;
-		ret = (ret == -1) ? -1 : ret;
+		ret = (ret == -1 || buff->char_read == -1) ? -1 : ret;
 		buff->ret_code = ret;
 	}
+	if (ret == 0 || ret == -1)
+		ft_gnl_del_buffer(&buff_lst, fd);
 	return (ret);
 }
 /*int		get_next_line(int fd, char **line)
