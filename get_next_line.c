@@ -33,14 +33,14 @@ int		get_next_line(int fd, char **line)
 			buff->char_read = read(buff->fd, buff->buffer, BUFF_SIZE);
 			buff->buffer[buff->char_read] = '\0';
 		}
-		ft_gnl_getnext(line, buff->buffer);
 		eol = ft_strchr(buff->buffer, '\n') ? 1 : 0;
+		ft_gnl_getnext(line, buff->buffer);
 		ret = (buff->char_read == 0 && ft_strlen(buff->buffer) == 0) ? 0 : ret;
 		ret = ((buff->char_read > 0 || eol) && ret == -2) ? 1 : ret;
 		ret = (ret == -1 || buff->char_read == -1) ? -1 : ret;
 		buff->ret_code = ret;
 	}
-	printf("%zu\n", ft_strlen(buff->buffer));
+	//printf("len buff:%zu\nbuffer:'%s'\nline:'%s'\n", ft_strlen(buff->buffer), buff->buffer, *line);
 	if (ret == 0 || ret == -1)
 		ft_gnl_del_buffer(&buff_lst, fd);
 	return (ret);
@@ -67,46 +67,13 @@ void	ft_gnl_getnext(char **line, char *buffer)
 		ft_strdel(&tmp2);
 	if (eol)
 	{
-		ft_memmove(buffer, eol + 1, ft_strlen(eol + 1));
-		ft_bzero(buffer + len, BUFF_SIZE - ft_strlen(eol));
+		len = ft_strlen(eol + 1);
+		ft_memmove(buffer, eol + 1, len);// ft_strlen(eol + 1));
+		ft_bzero(buffer + len, BUFF_SIZE - len);
+		//printf("len: %d\nbuffer: '%s'\n", len, buffer);
 	}
 	else
-		ft_bzero(buffer + ft_strlen(eol), BUFF_SIZE + 1);
-}
-
-void	ft_gnl_getnext2(char **line, char *buffer)
-{
-	char	*end_of_line;
-	char	*tmp;
-	char	*tmp2;
-	int		len;
-
-	end_of_line = ft_strchr(buffer, '\n');
-	len = 0;
-	if (end_of_line)
-	{
-		tmp = *line;
-		len = ft_strlen(end_of_line + 1);
-		len = (len) ? len : 1;
-		*line = ft_strsub(buffer, 0, end_of_line - buffer);
-		ft_memmove(buffer, end_of_line + 1, len);
-	}
-	else
-	{
-		tmp = *line;
-		*line = ft_strdup(buffer);
-		//ft_putendl(*line);
-	}
-	if (tmp)
-	{
-		tmp2 = *line;
-		*line = ft_strjoin(tmp, *line);
-		ft_strdel(&tmp);
-		ft_strdel(&tmp2);
-	}
-	printf("len sub: %ld\nbuffer + len: '%s'\n bzero: %'d'\n", end_of_line - buffer, buffer  + len, BUFF_SIZE - len - 1);
-//ft_putendl(*line);
-	ft_bzero(buffer + len, BUFF_SIZE - len - 1);
+		ft_bzero(buffer, BUFF_SIZE + 1);
 }
 
 t_buffer	*ft_gnl_get_buffer(t_buffer **buffers, int fd)
